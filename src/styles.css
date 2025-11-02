@@ -1,0 +1,217 @@
+:root {
+    --bg: #d0d0d0;
+    --panel: #d9c9c9;
+    --card: #e6e6e6;
+    --text: #222;
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    color: var(--text);
+    background: #efefef
+}
+
+/* layout */
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #bfbfbf
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 20px
+}
+
+.header .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.header .header-actions button {
+    margin-left: 8px;
+    border: none;
+    background: #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    min-height: 0
+}
+
+.side {
+    width: 280px;
+    background: var(--panel);
+    padding: 12px;
+    overflow: auto
+}
+
+.main {
+    flex: 1;
+    background: var(--bg);
+    padding: 16px;
+    overflow: auto
+}
+
+/* side panel */
+.side-item {
+    display: flex;
+    align-items: center;
+    background: #f1eaea;
+    border-radius: 14px;
+    padding: 10px;
+    margin-bottom: 12px
+}
+
+.side-item .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: 700
+}
+
+.side-item .owner {
+    color: #a00;
+    font-weight: 700;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 2px
+}
+
+.side-item .name {
+    font-size: 14px
+}
+
+/* overview */
+.overview {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card);
+    padding: 18px;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05)
+}
+
+.card-date {
+    font-size: 32px
+}
+
+.card-actions button {
+    border: none;
+    background: #ddd;
+    padding: 8px 10px;
+    border-radius: 10px;
+    margin-left: 8px;
+    cursor: pointer
+}
+
+/* detail */
+.detail {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px
+}
+
+.detail .back {
+    font-size: 14px;
+    text-decoration: none
+}
+
+.items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f4f4f4;
+    border-radius: 12px;
+    padding: 12px
+}
+
+.item.done span {
+    text-decoration: line-through;
+    opacity: .6
+}
+
+.item-actions button {
+    border: none;
+    background: #ddd;
+    padding: 6px 10px;
+    border-radius: 10px;
+    margin-left: 8px;
+    cursor: pointer
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .side {
+        width: 180px
+    }
+
+    .card-date {
+        font-size: 24px
+    }
+}
+
+@media (max-width: 600px) {
+    .content {
+        flex-direction: column
+    }
+
+    .side {
+        order: 2;
+        width: auto;
+        display: flex;
+        gap: 10px;
+        overflow: auto
+    }
+}
