@@ -10,7 +10,7 @@ export const members = [
 export const initialLists = [
   {
     id: "l1",
-    date: "17.10.2024",
+    date: "06.11.2025",
     items: [
       { id: "i1", name: "Milk", done: false },
       { id: "i2", name: "Bread", done: true },
@@ -19,7 +19,7 @@ export const initialLists = [
   },
   {
     id: "l2",
-    date: "15.10.2024",
+    date: "07.10.2025",
     items: [
       { id: "i4", name: "Apples", done: false },
       { id: "i5", name: "Rice", done: false },
@@ -27,7 +27,7 @@ export const initialLists = [
   },
   {
     id: "l3",
-    date: "11.10.2025",
+    date: "12.12.2025",
     items: [
       { id: "i6", name: "Batteries", done: true },
       { id: "i7", name: "USB cable", done: false },

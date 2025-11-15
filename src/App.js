@@ -1,15 +1,19 @@
+import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ShoppingListProvider } from "./context/ShoppingListContext";
 import Header from "./components/Header";
 import SidePanel from "./components/SidePanel";
 import ShoppingListOverview from "./components/ShoppingListOverview";
 import ShoppingListDetail from "./components/ShoppingListDetail";
+import NewListModal from "./components/NewListModal";
 
 export default function App() {
+  const [isNewListOpen, setNewListOpen] = useState(false);
+
   return (
     <ShoppingListProvider>
       <div className="app">
-        <Header />
+        <Header onCreateNew={() => setNewListOpen(true)} />
         <div className="content">
           <SidePanel />
           <main className="main">
@@ -21,6 +25,11 @@ export default function App() {
             </Routes>
           </main>
         </div>
+
+        <NewListModal
+          isOpen={isNewListOpen}
+          onClose={() => setNewListOpen(false)}
+        />
       </div>
     </ShoppingListProvider>
   );
