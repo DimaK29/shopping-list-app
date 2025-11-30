@@ -1,39 +1,47 @@
-import { createContext, useContext, useState, useMemo } from "react";
 import {
-  currentUser as me,
-  members as initialMembers,
-  initialLists,
-} from "../data";
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useEffect,
+} from "react";
+import { currentUser as me, members as initialMembers } from "../data";
+import {
+  fetchLists,
+  createList,
+  deleteList,
+  toggleItem as apiToggleItem,
+  deleteItem as apiDeleteItem,
+} from "../api/shoppingListApi";
 
 const Ctx = createContext(null);
 
 export function ShoppingListProvider({ children }) {
-  const [lists, setLists] = useState(initialLists);
+  const [lists, setLists] = useState([]);
   const [members] = useState(initialMembers);
   const [currentUser] = useState(me);
 
-  // додати новий список
-  const addList = (date, itemNames) => {
-    setLists((prev) => [
-      ...prev,
-      {
-        id: `l${Date.now()}`, // простий генератор id
-        date,
-        items: itemNames.map((name, index) => ({
-          id: `i${Date.now()}-${index}`,
-          name,
-          done: false,
-        })),
-      },
-    ]);
+  
+  useEffect(() => {
+    fetchLists().then(setLists);
+  }, []);
+
+  
+  const addList = async (date, itemNames) => {
+    const newList = await createList(date, itemNames);
+    setLists((prev) => [...prev, newList]);
   };
 
-  // видалити список
-  const removeList = (id) =>
+  
+  const removeList = async (id) => {
+    await deleteList(id);
     setLists((prev) => prev.filter((l) => l.id !== id));
+  };
 
-  // переключити done/not done у товару
-  const toggleItem = (listId, itemId) =>
+  
+  const toggleItem = async (listId, itemId) => {
+    await apiToggleItem(listId, itemId);
+
     setLists((prev) =>
       prev.map((l) =>
         l.id !== listId
@@ -46,9 +54,12 @@ export function ShoppingListProvider({ children }) {
             }
       )
     );
+  };
 
-  // видалити товар
-  const removeItem = (listId, itemId) =>
+  
+  const removeItem = async (listId, itemId) => {
+    await apiDeleteItem(listId, itemId);
+
     setLists((prev) =>
       prev.map((l) =>
         l.id !== listId
@@ -56,6 +67,7 @@ export function ShoppingListProvider({ children }) {
           : { ...l, items: l.items.filter((i) => i.id !== itemId) }
       )
     );
+  };
 
   const value = useMemo(
     () => ({

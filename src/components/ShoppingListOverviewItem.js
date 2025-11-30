@@ -11,7 +11,7 @@ export default function ShoppingListOverviewItem({ list }) {
   };
 
   const handleRemoveClick = (e) => {
-    // щоб клік по кнопці не відкривав detail
+
     e.stopPropagation();
 
     const confirmed = window.confirm(
@@ -23,7 +23,7 @@ export default function ShoppingListOverviewItem({ list }) {
   };
 
   const handleActionsClick = (e) => {
-    // щоб клік в блоці з кнопками не тригерив клік по картці
+    
     e.stopPropagation();
   };
 
