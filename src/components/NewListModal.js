@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useShopping } from "../context/ShoppingListContext";
+import { useTranslation } from "react-i18next";
 
 export default function NewListModal({ isOpen, onClose }) {
   const { addList } = useShopping();
+  const { t, i18n } = useTranslation();
+
   const [date, setDate] = useState("");
   const [itemsText, setItemsText] = useState("");
 
@@ -17,11 +20,13 @@ export default function NewListModal({ isOpen, onClose }) {
       .filter(Boolean);
 
     if (!date || trimmedItems.length === 0) {
-      alert("Vyplňte prosím datum a alespoň jednu položku.");
+      alert(t("fillDateAndItem"));
       return;
     }
 
-    const dateStr = new Date(date).toLocaleDateString("cs-CZ");
+    const locale = i18n.language === "en" ? "en-GB" : "cs-CZ";
+    const dateStr = new Date(date).toLocaleDateString(locale);
+
     addList(dateStr, trimmedItems);
 
     setDate("");
@@ -29,45 +34,32 @@ export default function NewListModal({ isOpen, onClose }) {
     onClose();
   };
 
-  const handleBackdropClick = () => {
-    onClose();
-  };
-
-  const stopPropagation = (e) => {
-    e.stopPropagation();
-  };
-
   return (
-    <div className="modal-backdrop" onClick={handleBackdropClick}>
-      <div className="modal" onClick={stopPropagation}>
-        <h2>Nový nákupní seznam</h2>
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <h2>{t("newList")}</h2>
+
         <form onSubmit={handleSubmit}>
           <label>
-            Datum
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
+            {t("date")}
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </label>
+
           <label>
-            Položky (každá na nový řádek)
+            {t("itemsPlaceholder")}
             <textarea
               rows="4"
               value={itemsText}
               onChange={(e) => setItemsText(e.target.value)}
             />
           </label>
+
           <div className="modal-actions">
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={onClose}
-            >
-              Zrušit
+            <button type="button" className="btn-secondary" onClick={onClose}>
+              {t("cancel")}
             </button>
             <button type="submit" className="btn-primary">
-              Vytvořit
+              {t("create")}
             </button>
           </div>
         </form>
